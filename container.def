@@ -1,0 +1,28 @@
+# NOTE: when using apptainer exec, prepend `/usr/local/bin/_entrypoint.sh` to
+# the command
+#  e.g. apptainer exec /usr/local/bin/_entrypoint.sh python -c "print('Hello, World!')"
+# This is necessary to ensure that the environment is properly set up before
+# running the command.
+# See: https://micromamba-docker.readthedocs.io/en/latest/faq.html#how-can-i-use-a-mambaorg-micromamba-based-image-with-apptainer
+
+BootStrap: localimage
+From: containers/dependencies.sif
+
+%post
+eval "$(micromamba shell hook -s posix)"
+
+%environment
+# https://www.dei.unipd.it/~ceccarello/posts/apptainer-devenv/
+eval "$(micromamba shell hook -s posix)"
+micromamba activate base
+mkdir -p data/
+mkdir -p logs/
+export META_PATH=src/video/metadata/secure_metadata.tsv
+export CACHE_DIR=.cache/
+export DATA_DIR=data/
+export LOG_DIR=logs/
+export MODEL_DIR=models/
+export SHOTS_DIR=/fake/path/to/shots/
+mkdir -p python-packages/
+export PYTHONPATH=$PYTHONPATH:./python-packages/
+python -m pip install --prefix=python-packages/ --no-build-isolation --no-deps -e .

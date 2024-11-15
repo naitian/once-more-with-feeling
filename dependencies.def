@@ -1,0 +1,32 @@
+# NOTE: when using apptainer exec, prepend `/usr/local/bin/_entrypoint.sh` to
+# the command
+#  e.g. apptainer exec /usr/local/bin/_entrypoint.sh python -c "print('Hello, World!')"
+# This is necessary to ensure that the environment is properly set up before
+# running the command.
+# See: https://micromamba-docker.readthedocs.io/en/latest/faq.html#how-can-i-use-a-mambaorg-micromamba-based-image-with-apptainer
+
+BootStrap: docker
+From: mambaorg/micromamba:1.5.8-jammy-cuda-12.3.1
+
+%files
+environment.yaml app/
+
+%post
+export DEBIAN_FRONTEND=noninteractive
+export TZ=Etc/UTC
+echo "tzdata tzdata/Areas select Etc" | debconf-set-selections
+echo "tzdata tzdata/Zones/Etc select UTC" | debconf-set-selections
+
+apt-get update && apt-get install -y gcc cmake llvm g++ ffmpeg libsm6 libxext6 libegl1-mesa libgl1
+apt-get install -y \
+    build-essential \
+    libopencv-dev \
+    python3-opencv \
+    python3-pip \
+    libqt5gui5 \
+    libqt5widgets5 \
+    libqt5core5a
+
+# micromamba install --name base --channel=conda-forge python=3.11 && \
+CONDA_OVERRIDE_CUDA="12.3" micromamba install --name base --file app/environment.yaml && \
+micromamba clean --all --yes
