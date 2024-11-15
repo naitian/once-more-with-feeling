@@ -1,5 +1,4 @@
 # Once More, With Feeling: Measuring Emotion of Acting Performances in Contemporary American Film
----
 
 Narrative film is a composition of writing, cinematography, editing, and
 performance. While much computational work has focused on the writing or visual
