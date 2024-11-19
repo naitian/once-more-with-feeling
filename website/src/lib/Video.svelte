@@ -18,7 +18,7 @@
 <Wide>
 	<div id="theater" class="video-container">
 		<div class="inner">
-			<video src={`${base}/ladies_and_gentlemen.mp4`} use:intersect={intersectionOptions} controls></video>
+			<video src={`./ladies_and_gentlemen.mp4`} use:intersect={intersectionOptions} controls></video>
             <p class="caption">Keep scrolling to dive in.</p>
 		</div>
 	</div>

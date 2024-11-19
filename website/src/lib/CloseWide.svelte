@@ -5,10 +5,10 @@
 
 <figure>
 	<Wide>
-		<img class="wide" src={`${base}/wide.png`} alt="A wide shot of Audrey Hepburn from the film Charade." />
+		<img class="wide" src={`./wide.png`} alt="A wide shot of Audrey Hepburn from the film Charade." />
 		<img
 			class="close"
-			src={`${base}/close.png`}
+			src={`./close.png`}
 			alt="A close-up of Audrey Hepburn showing the details of her expression from the film Charade."
 		/>
 	</Wide>
