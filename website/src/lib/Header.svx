@@ -1,0 +1,94 @@
+<script>
+	import Wide from '$lib/Wide.svelte';
+	import { balancer } from 'svelte-action-balancer';
+
+	function handleAnchorClick (event) {
+		event.preventDefault()
+		const link = event.currentTarget
+		const anchorId = new URL(link.href).hash.replace('#', '')
+		const anchor = document.getElementById(anchorId)
+		window.scrollTo({
+			top: anchor.getBoundingClientRect().top + window.scrollY,
+			behavior: 'smooth'
+		})
+	}
+</script>
+
+<header id="paper-content">
+	<Wide
+		><h1 class="title" use:balancer={{ enabled: true, ratio: 0.5 }}>
+			Once More, With Feeling: Measuring Emotion of Acting Performances in Contemporary American
+			Film
+		</h1></Wide
+	>
+	<div class="authors">
+		<span class="author">Naitian Zhou</span> and
+		<span class="author">David Bamman</span>
+	</div>
+	<div class="affiliations">
+		<span class="affiliation">University of California, Berkeley</span>
+	</div>
+
+	<div class="links">
+		<a href="http://arxiv.org/abs/2411.10018">📝 Read the Paper</a>
+		<a href="https://github.com/naitian/once-more-with-feeling/">💻 View the Code</a>
+	</div>
+</header>
+
+<div class="abstract" use:balancer>
+
+	In this paper, we conduct a computational exploration of acting performance.
+	Applying speech emotion recognition models and a variationist
+	sociolinguistic analytical framework to a corpus of popular, contemporary
+	American film, we find narrative structure, diachronic shifts, and genre-
+	and dialogue-based constraints located in spoken performances.
+	
+	[Read the paper](http://arxiv.org/abs/2411.10018) or <a href="#theater" on:click={handleAnchorClick}>explore the website</a>. Make sure your audio is on 🔉!
+
+</div>
+
+<style>
+	header {
+		margin-bottom: 2em;
+		text-align: center;
+	}
+
+	.title {
+		font-size: 1.8em;
+		line-height: 1.2em;
+		text-align: center;
+		margin: 1em auto;
+	}
+
+	.authors {
+		opacity: 0.8;
+	}
+	.author {
+		font-weight: bold;
+	}
+	.affiliations {
+		font-style: italic;
+		opacity: 0.8;
+	}
+	.affiliation {
+		margin-right: 0.5em;
+	}
+
+	.abstract {
+		margin: 0 auto;
+	}
+
+	.links a {
+		font-size: 0.8em;
+		color: white;
+		margin-right: 1em;
+		border: 1px solid #ccc;
+		background-color: #333;
+		border-radius: 5px;
+		padding: 5px 10px;
+		text-decoration: none;
+		font-family:
+			Open Sans,
+			sans-serif;
+	}
+</style>

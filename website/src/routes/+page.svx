@@ -1,0 +1,228 @@
+<script>
+	import Header from '$lib/Header.svx';
+	import Video from '$lib/Video.svelte';
+	import NarrativeEmotions from '$lib/NarrativeEmotions.svelte';
+	import EmotionHistory from '$lib/EmotionHistory.svelte';
+	import Blockquote from '$lib/Blockquote.svelte';
+    import CloseWide from '$lib/CloseWide.svelte';
+    import DialogueRange from '$lib/DialogueRange.svelte';
+
+	let scrollY = 0;
+	let windowHeight = 100;
+	let backgroundLightness = 0;
+    let titlePage;
+
+	const setBackground = (scrollY) => {
+        if (!titlePage) return;
+        const introHeight = titlePage.getBoundingClientRect().height + titlePage.getBoundingClientRect().top;
+        console.log(introHeight)
+		backgroundLightness = Math.min((scrollY + windowHeight - introHeight) / (windowHeight * 0.8), 1);
+	};
+	$: setBackground(scrollY);
+</script>
+
+<svelte:window bind:scrollY bind:innerHeight={windowHeight} />
+<div
+	class="body"
+	style:background-color={`rgba(16, 16, 16, ${backgroundLightness})`}
+	style:color={`hsl(0, 0%, ${80 * backgroundLightness + 13}%)`}
+>
+	<div class="container">
+		<div class="title-page" bind:this={titlePage} >
+			<div><Header></Header></div>
+		</div>
+
+		<Video></Video>
+
+		A single line can have infinite variation in its delivery; performance has great capacity for
+		meaning-making. In this project, we use computational methods to explore the emotional range of
+		performances in contemporary American film.
+
+        We apply the analytical framework of variationist sociolinguistics to
+        explore performance: given a fixed line of <span class="dia">dialogue</span>, the performance entails a <i>choice</i> between a set of
+		possible <span class="del">deliveries</span>.
+
+        We create a pipeline of speech and text-based
+		computational models to construct a dataset of dialogues and the emotional value of their
+		deliveries.
+
+        In this paper, we ask three main questions:
+
+        1. How does <span class="del">emotional performance</span>
+		relate to narrative structure?
+        2. How has the <span class="del">emotionality</span> of films changed historically?
+        3. How can we measure <span class="del">emotional range</span>?
+
+
+        ## About the data
+
+        We apply our pipeline to a [corpus of contemporary American
+        film](https://doi.org/10.1073/pnas.2409770121), taking popular
+        live-action narrative films spanning the years 1980-2022. To supplement,
+        we also include the best picture-equivalent nominees from those years
+        from six different organizations.
+        
+        Ultimately, this results in <b>2,283 feature-length films</b> spanning
+        the last four decades.
+        
+        ## Emotions over narrative time
+
+        We first ask the natural
+		question of how our detected emotions relate to narrative time --- in other words, which
+		emotions are most prevalent at a given point in a film?
+
+		<NarrativeEmotions></NarrativeEmotions>
+
+		## Historical shifts in emotionality
+
+        Though it's interesting to look at the trajectories of
+		different emotions, the constructs of measuring specific emotions can be restrictive and
+		contested. In the rest of the paper, we focus on the more general notions, like _emotionality_.
+
+		[Computational work on English fiction](https://pubmed.ncbi.nlm.nih.gov/27910735/) has shown a
+		decline in emotionality. On the other hand, film theorist David Bordwell has famously written
+		about the [visual intensification of
+		cinema](https://online.ucpress.edu/fq/article/55/3/16/28821/Intensified-Continuity-Visual-Style-in).
+
+		<EmotionHistory></EmotionHistory>
+
+		We find that emotionality has declined since the 1980s. And what's more, this trend exists even
+		when we control for the dialogue being spoken. This means that the decline in the emotion isn't
+		due to a change in the <span class="dia">writing</span>, but rather a change in the <span class="del">performance.</span>
+
+		How do we interpret this finding in the context of Bordwell's visual intensification?
+
+		<Blockquote author="Erwin Panovsky" source="Style and medium in the moving pictures."
+			>…whereas, <b style:color="#EEE">on the stage, the spoken word makes a stronger rather than a weaker impression</b> if
+			we are not permitted to count the hairs in Romeo's mustache.
+		</Blockquote>
+
+        Art historian Erwin Panofsky wrote in his essay “Style and Medium in the
+        Motion Pictures” that the unique characteristics of screen acting are
+        exemplified by the close-up shot. The close-up provides a rich field of
+        action for nuanced acting performances.
+
+        What would be almost imperceptible from a natural viewing distance is
+        magnified by the camera. In this context, the subtleties of visual
+        performance create a rich channel of expression.
+
+        <CloseWide></CloseWide>
+
+        Indeed, Bordwell has found that close-ups have evolved to become ever
+        tighter on their subjects. Perhaps, when the visual channel increases
+        capacity for emotional performance, the emotionality of the spoken word
+        need not bear so strong a burden.
+
+
+        ## Measuring emotional range
+
+        Finally, we examine the idea of emotional range, which is a highly
+        salient concept in film criticism. For some, range is the hallmark of
+        great acting. We construct a quantitative measure of emotional range
+        based on _entropy_. Our measure is widely applicable for any set of
+        utterances; for example, we might want to measure the emotional range
+        across a genre, a film, or even a particular phrase of dialogue.
+
+        Using this measure, we can compare different lines of dialogue to see
+        which have greater capacity for emotional range.
+
+        <DialogueRange></DialogueRange>
+
+        Film scholar James Naremore draws on Goffman when writing about film
+        performance: he theorizes that actors draw on and play against the
+        interactional norms with which the audience is already familiar. When we
+        identify the phrases with greatest and least emotional range, we find
+        support for this idea.
+        
+        <p>
+
+        <span class="dia">Phrases with low range</span> are mostly functional and
+        belong in highly-directed interactions. Many of the phrases are
+        yes-or-no questions, or answers to them.
+        </p>
+
+        <p>
+        <span class="del">Phrases with high emotional range</span>, on the other hand, are often more
+        open-ended or evaluative; in these cases, the delivery of the line has
+        much greater space to lend color to the statement being made.
+        </p>
+
+        ## Conclusion
+
+        In this paper, we take a computational approach to studying
+        _performance_ in film. While computational work has traditionally
+        focused on the written text of screenplays, and film theorists have
+        traditionally emphasized editing and cinematography, we find there is
+        rich meaning in multimodal analyses of performance in film.
+
+        I encourage you to read the paper, which will be presented at
+        Computational Humanities Research 2024 in Aarhus, Denmark. In it, we
+        detail our computational pipeline, further explain the measure of
+        emotional range, and present additional findings on emotional range by
+        genre.
+
+        ---
+        
+        <div class="nerd-box">
+
+
+Some additional notes:
+1. I used movies from the public domain for the examples on this
+website, but the corpus in our paper covers the box office top-50 live
+action narrative films from 1980-2022.
+2. The prestige films we used were the best picture-equivalent nominees
+from the Academy Awards, Golden Globes, British Academy of Film and
+Television Arts, Los Angeles Film Critics Association, National Board of
+Review, and National Society of Film Critics.
+
+
+        </div>
+
+	</div>
+</div>
+
+<style>
+	span.dia {
+		color: lightcoral;
+		font-weight: bold;
+	}
+	span.del {
+		color: lightskyblue;
+		font-weight: bold;
+	}
+	div.body {
+		background-color: #222;
+		color: #eee;
+		min-height: 200vh;
+	}
+
+	.body::before,
+	.body::after {
+		content: ' ';
+		display: table;
+	}
+
+	.title-page {
+		min-height: 100vh;
+		position: relative;
+	}
+	.title-page > div {
+		position: absolute;
+		transform: translateY(-50%);
+		top: max(50%, 20px);
+	}
+	.container {
+		max-width: 600px;
+		width: 80vw;
+		margin: 3rem auto;
+	}
+
+    .nerd-box {
+        background-color: #222;
+        color: #ddd;
+        padding: 1em;
+        border-radius: 0.5em;
+        margin-top: 2em;
+        font-size: 0.8em;
+    }
+</style>
