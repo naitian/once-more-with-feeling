@@ -1,13 +1,14 @@
 <script>
 	import Wide from './Wide.svelte';
+    import { base } from '$app/paths';
 </script>
 
 <figure>
 	<Wide>
-		<img class="wide" src="/wide.png" alt="A wide shot of Audrey Hepburn from the film Charade." />
+		<img class="wide" src={`${base}/wide.png`} alt="A wide shot of Audrey Hepburn from the film Charade." />
 		<img
 			class="close"
-			src="/close.png"
+			src={`${base}/close.png`}
 			alt="A close-up of Audrey Hepburn showing the details of her expression from the film Charade."
 		/>
 	</Wide>

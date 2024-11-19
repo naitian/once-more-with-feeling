@@ -1,6 +1,7 @@
 <script>
 	import Wide from './Wide.svelte';
 	import { intersect } from 'svelte-intersection-observer-action';
+    import { base } from '$app/paths';
 
 	const intersectionOptions = {
 		callback: (entry) => {
@@ -17,7 +18,7 @@
 <Wide>
 	<div id="theater" class="video-container">
 		<div class="inner">
-			<video src="/ladies_and_gentlemen.mp4" use:intersect={intersectionOptions} controls></video>
+			<video src={`${base}/ladies_and_gentlemen.mp4`} use:intersect={intersectionOptions} controls></video>
             <p class="caption">Keep scrolling to dive in.</p>
 		</div>
 	</div>
