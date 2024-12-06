@@ -65,6 +65,7 @@
 		max-width: calc(20vw - 30px);
 		white-space: nowrap;
 		overflow-x: hidden;
+		overflow: hidden;
 		text-overflow: clip;
 	}
 	.entropy-cell {
